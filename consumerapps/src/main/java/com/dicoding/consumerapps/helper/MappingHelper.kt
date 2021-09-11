@@ -1,8 +1,8 @@
-package com.dicoding.mynotesapp.helper
+package com.dicoding.consumerapps.helper
 
 import android.database.Cursor
-import com.dicoding.mynotesapp.db.DatabaseContract
-import com.dicoding.mynotesapp.entity.Note
+import com.dicoding.consumerapps.db.DatabaseContract
+import com.dicoding.consumerapps.entity.Note
 
 //Kelas Untuk mengonversi dari Cursor ke Arraylist,karena nanti di adapter kita akan menggunakan arraylist, sedangkan di sini objek yang di kembalikan berupa Cursor
 object MappingHelper {

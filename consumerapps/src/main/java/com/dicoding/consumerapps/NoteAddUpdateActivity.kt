@@ -1,22 +1,21 @@
-package com.dicoding.mynotesapp
+package com.dicoding.consumerapps
 
 import android.content.ContentValues
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import com.dicoding.mynotesapp.databinding.ActivityNoteAddUpdateBinding
-import com.dicoding.mynotesapp.db.DatabaseContract
-import com.dicoding.mynotesapp.db.DatabaseContract.NoteColumns.Companion.CONTENT_URI
-import com.dicoding.mynotesapp.db.DatabaseContract.NoteColumns.Companion.DATE
-import com.dicoding.mynotesapp.db.NoteHelper
-import com.dicoding.mynotesapp.entity.Note
-import com.dicoding.mynotesapp.helper.MappingHelper
+import androidx.appcompat.app.AppCompatActivity
+import com.dicoding.consumerapps.databinding.ActivityNoteAddUpdateBinding
+import com.dicoding.consumerapps.db.DatabaseContract
+import com.dicoding.consumerapps.db.DatabaseContract.NoteColumns.Companion.CONTENT_URI
+import com.dicoding.consumerapps.db.DatabaseContract.NoteColumns.Companion.DATE
+import com.dicoding.consumerapps.entity.Note
+import com.dicoding.consumerapps.helper.MappingHelper
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -26,18 +25,12 @@ class NoteAddUpdateActivity : AppCompatActivity(), View.OnClickListener {
     private var note: Note? = null
     private var position: Int = 0
     private lateinit var uriWithId: Uri
-    private lateinit var noteHelper: NoteHelper
 
     private lateinit var binding: ActivityNoteAddUpdateBinding
 
     companion object {
         const val EXTRA_NOTE = "extra_note"
         const val EXTRA_POSITION = "extra_position"
-        const val REQUEST_ADD = 100
-        const val RESULT_ADD = 101
-        const val REQUEST_UPDATE = 200
-        const val RESULT_UPDATE = 201
-        const val RESULT_DELETE = 301
         const val ALERT_DIALOG_CLOSE = 10
         const val ALERT_DIALOG_DELETE = 20
     }
@@ -47,8 +40,6 @@ class NoteAddUpdateActivity : AppCompatActivity(), View.OnClickListener {
         binding = ActivityNoteAddUpdateBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        noteHelper = NoteHelper.getInstance(applicationContext)
-        noteHelper.open()
 
         note = intent.getParcelableExtra(EXTRA_NOTE)
         if (note != null) {
@@ -120,15 +111,6 @@ class NoteAddUpdateActivity : AppCompatActivity(), View.OnClickListener {
                 contentResolver.update(uriWithId, values, null, null)
                 Toast.makeText(this, "Satu Item Berhasil Diedit", Toast.LENGTH_SHORT).show()
                 finish()
-
-                //Kode Di Bawah Jika Tidak Menggunakan Content Provider
-                /*val result = noteHelper.update(note?.id.toString(), values).toLong() //Memanggil Metode Update Yang Ada Di Class NotesHelper Untuk Mengubah Data Di SQLite
-                if (result > 0) {
-                    setResult(RESULT_UPDATE, intent) //Setiap aksi akan mengirimkan data dan RESULT_CODE untuk diproses pada
-                    finish()
-                } else {
-                    Toast.makeText(this@NoteAddUpdateActivity, "Gagal Memperbarui Data", Toast.LENGTH_SHORT).show()
-                }*/
 
             //Kode Ini Dijalankan Jika IsEdit Bernilai False
             } else {

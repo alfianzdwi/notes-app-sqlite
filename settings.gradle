@@ -1,2 +1,4 @@
 rootProject.name = "MyNotesApp"
 include ':app'
+include ':consumerapp'
+include ':consumerapps'
